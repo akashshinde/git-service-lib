@@ -1,6 +1,6 @@
-[![TypeScript version][ts-badge]][typescript-34]
-[![Node.js version][nodejs-badge]][nodejs]
-[![Build Status][travis-badge]][travis-ci]
+[![TypeScript version][ts-badge]][typescript-34]]
+[![Node.js version][nodejs-badge]][nodejs]]
+[![Build Status][travis-badge]][travis-ci]]
 
 
 ## Quick start
