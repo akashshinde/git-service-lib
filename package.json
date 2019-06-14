@@ -1,7 +1,7 @@
 {
-  "name": "node-typescript-boilerplate",
-  "version": "0.0.0",
-  "description": "Minimalistic boilerplate to quick-start Node.js development in TypeScript.",
+  "name": "git-service-node",
+  "version": "0.0.1",
+  "description": "Git Service.",
   "engines": {
     "node": ">= 10.13 <11"
   },
@@ -29,6 +29,10 @@
   "author": "Jakub Synowiec <github@jakubsynowiec.info>",
   "license": "Apache-2.0",
   "dependencies": {
-    "tslib": "~1.9.3"
+    "tslib": "~1.9.3",
+    "@octokit/rest": "latest",
+    "git-url-parse": "latest",
+    "parse-bitbucket-url": "latest",
+    "bitbucket": "latest"
   }
 }
