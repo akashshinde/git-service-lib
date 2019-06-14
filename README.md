@@ -1,5 +1,5 @@
-[![TypeScript version][ts-badge]][typescript-34]]
-[![Node.js version][nodejs-badge]][nodejs]]
+[![TypeScript version][ts-badge]][typescript-34]
+[![Node.js version][nodejs-badge]][nodejs]
 [![Build Status][travis-badge]][travis-ci]]
 
 
