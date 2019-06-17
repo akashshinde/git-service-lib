@@ -36,21 +36,23 @@ describe("Github Tests" , () => {
       })
   });
 
-  // it('should list all branches of existing public github repo', (done: any) => {
-  //   const gr = new GitSource(
-  //     "https://github.com/redhat-developer/devconsole-git",
-  //     SecretType.NO_AUTH,
-  //     null
-  //   );
-  //
-  //   const gs = new GithubService(gr);
-  //   gs.getRepoBranchList()
-  //     .then(()=> {
-  //       assert.ok("Repo is reachable")
-  //     })
-  //     .catch((err: Error) => {
-  //       done(err);
-  //       assert.fail("Repo is existing")
-  //     })
-  // })
+  it('should list all branches of existing public github repo', (done: any) => {
+    const gr = new GitSource(
+      "https://github.com/redhat-developer/devconsole-git",
+      SecretType.NO_AUTH,
+      null
+    );
+
+    const gs = new GithubService(gr);
+    gs.getRepoBranchList()
+      .then((r: any)=> {
+        assert.ok("List of branches", r);
+        done()
+      })
+      .catch((err: Error) => {
+        done(err);
+        assert.fail("Repo is existing")
+      })
+  });
+
 });

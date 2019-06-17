@@ -47,8 +47,7 @@ export class GithubService extends BaseService {
                 owner: metadata.owner,
                 repo: metadata.repoName
             });
-
-            const list = resp.data.map( r => {
+            const list = resp.data.map((r) => {
               return new Branch(r.name);
             });
             return new BranchList(resp, list)
@@ -60,7 +59,6 @@ export class GithubService extends BaseService {
     getRepoLanguageList() {
       throw new Error("Method not implemented.");
     }
-
 
     getRepoMetadata() {
         const metadata = GitUrlParse(this.gitsource.url)

@@ -5,11 +5,17 @@ import {GitSource, SecretType} from "./service/modal/gitsource";
 import {GithubService} from "./service/github_service";
 
 
-var gs = new GitSource(
-  "https://github.com/redhat-developer/devconsole-operator",
+const gr = new GitSource(
+  "https://github.com/redhat-developer/devconsole-git",
   SecretType.NO_AUTH,
   null
 );
 
-var github = new GithubService(gs);
-github.getRepoBranchList().then(b => console.log(b));
+const gs = new GithubService(gr);
+gs.getRepoBranchList()
+  .then((r)=> {
+    console.log(r)
+  })
+  .catch((err: Error) => {
+    console.error(err)
+});
