@@ -53,26 +53,4 @@ describe('greeter function', () => {
       })
   });
 
-  it('should return ok on existing private bitbucket repo', (done: any) => {
-    const gr = new GitSource(
-      "https://bitbucket.org/siminsights/cts-web-app",
-      SecretType.BASIC_AUTH,
-      {
-        username: 'akash.kindertouch@gmail.com',
-        password: '9011543105'
-      }
-    );
-
-    const gs = new BitbucketService(gr);
-    gs.isRepoReachable()
-      .then(() => {
-        assert.ok("Repo is reachable");
-        done();
-      })
-      .catch(() => {
-        assert.fail("Repo does not exist");
-        done();
-      })
-  })
-
 });
