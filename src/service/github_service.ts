@@ -1,19 +1,31 @@
-import { BaseService } from './base_service'
+import {BaseService} from './base_service'
 import * as Octokit from '@octokit/rest'
 import * as GitUrlParse from 'git-url-parse'
-import { RepoMetadata } from './modal/repo_metadata'
-import { GitSource } from "./modal/gitsource";
+import {RepoMetadata} from './modal/repo_metadata'
+import {GitSource, SecretType} from "./modal/gitsource";
 import {RepoCheck} from "./modal/response_model/repo_check";
 import {Branch, BranchList} from "./modal/response_model/branch_list";
 
 export class GithubService extends BaseService {
-
-    client: Octokit
+    client: Octokit;
 
     constructor(gitsource: GitSource) {
-        super(gitsource)
-        this.client = new Octokit()
+        super(gitsource);
+        var opts = this.getAuthProvider();
+        this.client = new Octokit({ auth: opts })
     }
+
+    getAuthProvider = (): any => {
+      switch(this.gitsource.secretType) {
+        case SecretType.BASIC_AUTH:
+          var {username, password} = this.gitsource.secretContent;
+          return { username, password };
+        case SecretType.NO_AUTH:
+          return null;
+        default:
+          return null;
+      }
+    };
 
     async isRepoReachable(): Promise<RepoCheck> {
         var metadata:RepoMetadata = this.getRepoMetadata();
@@ -34,11 +46,11 @@ export class GithubService extends BaseService {
             const resp = await this.client.repos.listBranches({
                 owner: metadata.owner,
                 repo: metadata.repoName
-            })
+            });
 
             const list = resp.data.map( r => {
               return new Branch(r.name);
-            })
+            });
             return new BranchList(resp, list)
         }catch (e) {
             throw e;

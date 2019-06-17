@@ -33,6 +33,7 @@
     "@octokit/rest": "latest",
     "git-url-parse": "latest",
     "parse-bitbucket-url": "latest",
-    "bitbucket": "latest"
+    "bitbucket": "latest",
+    "power-assert": "latest"
   }
 }

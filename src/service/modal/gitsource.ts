@@ -1,7 +1,7 @@
 export class GitSource {
-  url: string
-  secretType: SecretType
-  secretContent: any
+  url: string;
+  secretType: SecretType;
+  secretContent: any;
   constructor(url: string,
                 secretType: SecretType,
                 secretContent: any) {
@@ -9,7 +9,7 @@ export class GitSource {
         this.secretType = secretType ? secretType : SecretType.NO_AUTH;
         this.secretContent = secretContent;
     }
-};
+}
 
 export enum SecretType {
     NO_AUTH,

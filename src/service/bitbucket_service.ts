@@ -1,21 +1,20 @@
 import * as Bitbucket from 'bitbucket'
-import { BaseService } from "./base_service";
-import { RepoMetadata } from './modal/repo_metadata'
+import {BaseService} from "./base_service";
+import {RepoMetadata} from './modal/repo_metadata'
 import * as parseBitbucketUrl from 'parse-bitbucket-url'
-import {GitSource} from "./modal/gitsource";
+import {GitSource, SecretType} from "./modal/gitsource";
 import {RepoCheck} from "./modal/response_model/repo_check";
 import {Branch, BranchList} from "./modal/response_model/branch_list";
 
 export class BitbucketService extends BaseService {
 
-  getRepoLanguageList() {
-    throw new Error("Method not implemented.");
-  }
-    client: Bitbucket
+    client: Bitbucket;
 
     constructor(gitsource: GitSource) {
         super(gitsource);
         this.client = new Bitbucket();
+        const creds = this.getAuthProvider();
+        if (creds) this.client.authenticate(creds)
     }
 
     async isRepoReachable(): Promise<RepoCheck> {
@@ -24,7 +23,7 @@ export class BitbucketService extends BaseService {
             const resp = await this.client.repositories.get({
                 repo_slug: metadata.repoName,
                 username: metadata.owner
-            })
+            });
             return new RepoCheck(resp, true)
         }catch (e) {
             throw e;
@@ -53,5 +52,21 @@ export class BitbucketService extends BaseService {
             metadata.ref,
             metadata.name
         )
+    }
+
+    getAuthProvider(): any {
+      switch (this.gitsource.secretType) {
+          case SecretType.BASIC_AUTH:
+            const {username, password} = this.gitsource.secretContent;
+            return {type: 'basic', username, password};
+          case SecretType.NO_AUTH:
+            return null;
+          default:
+            return null;
+      }
+    }
+
+    async getRepoLanguageList(): Promise<any> {
+      return undefined;
     }
 }

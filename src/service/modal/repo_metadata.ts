@@ -1,5 +1,4 @@
 export class RepoMetadata{
-
     owner: string
     host: string
     defaultBranch: string
