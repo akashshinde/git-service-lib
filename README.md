@@ -9,12 +9,6 @@ cd git-service-lib
 npm install
 ```
 
-### Unit tests in JavaScript
-
-Writing unit tests in TypeScript can sometimes be troublesome and confusing. Especially when mocking dependencies and using spies.
-
-This is **optional**, but if you want to learn how to write JavaScript tests for TypeScript modules, read the [corresponding wiki page][wiki-js-tests].
-
 ## Available scripts
 
 + `clean` - remove coverage data, Jest cache and transpiled files,
