@@ -16,6 +16,7 @@ describe("Github Tests" , () => {
     jest.setTimeout(1000*10);
     // hello = await p;
   });
+
   it('should return ok on existing public github repo', (done: any) => {
     const gr = new GitSource(
       "https://github.com/redhat-developer/devconsole-git",
@@ -35,21 +36,21 @@ describe("Github Tests" , () => {
       })
   });
 
-  it('should list all branches of existing public github repo', (done: any) => {
-    const gr = new GitSource(
-      "https://github.com/redhat-developer/devconsole-git",
-      SecretType.NO_AUTH,
-      null
-    );
-
-    const gs = new GithubService(gr);
-    gs.getRepoBranchList()
-      .then(()=> {
-        assert.ok("Repo is reachable")
-      })
-      .catch((err: Error) => {
-        done(err);
-        assert.fail("Repo is existing")
-      })
-  })
+  // it('should list all branches of existing public github repo', (done: any) => {
+  //   const gr = new GitSource(
+  //     "https://github.com/redhat-developer/devconsole-git",
+  //     SecretType.NO_AUTH,
+  //     null
+  //   );
+  //
+  //   const gs = new GithubService(gr);
+  //   gs.getRepoBranchList()
+  //     .then(()=> {
+  //       assert.ok("Repo is reachable")
+  //     })
+  //     .catch((err: Error) => {
+  //       done(err);
+  //       assert.fail("Repo is existing")
+  //     })
+  // })
 });
