@@ -5,6 +5,7 @@ import * as parseBitbucketUrl from 'parse-bitbucket-url'
 import {GitSource, SecretType} from "./modal/gitsource";
 import {RepoCheck} from "./modal/response_model/repo_check";
 import {Branch, BranchList} from "./modal/response_model/branch_list";
+import {RepoFileList} from "./modal/response_model/repo_file_list";
 
 export class BitbucketService extends BaseService {
 
@@ -36,7 +37,7 @@ export class BitbucketService extends BaseService {
             const resp = await this.client.refs.listBranches({
                 repo_slug: metadata.repoName,
                 username: metadata.owner
-            })
+            });
             const list = resp.data.values.map(v => new Branch(v.name));
             return new BranchList(resp, list)
         }catch (e) {
@@ -44,14 +45,14 @@ export class BitbucketService extends BaseService {
         }
     }
 
-    getRepoMetadata() {
+    getRepoMetadata(): RepoMetadata {
         const metadata = parseBitbucketUrl(this.gitsource.url);
-        return new RepoMetadata(
+        return  new RepoMetadata(
             metadata.owner,
             metadata.source,
-            metadata.ref,
+            this.gitsource.ref,
             metadata.name
-        )
+        );
     }
 
     getAuthProvider(): any {
@@ -63,6 +64,23 @@ export class BitbucketService extends BaseService {
             return null;
           default:
             return null;
+      }
+    }
+
+    async getRepoFileList(): Promise<RepoFileList> {
+      try {
+        const metadata = this.getRepoMetadata();
+        const resp = await this.client.repositories.readSrc({
+          node: metadata.defaultBranch,
+          path: '',
+          username: metadata.owner,
+          repo_slug: metadata.repoName,
+          pagelen: 50
+        });
+        const files = resp.data.values.map(f => f.path)
+        return <RepoFileList> { files }
+      }catch (e) {
+        throw e;
       }
     }
 

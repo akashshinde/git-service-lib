@@ -55,4 +55,44 @@ describe("Github Tests" , () => {
       })
   });
 
+  it('should list all files of existing public github repo', (done: any) => {
+    const gr = new GitSource(
+      "https://github.com/redhat-developer/devconsole-git",
+      SecretType.NO_AUTH,
+      null
+    );
+
+    const gs = new GithubService(gr);
+    gs.getRepoFileList()
+      .then((r)=> {
+        expect(r.files.length).toBeGreaterThanOrEqual(1);
+        done()
+      })
+      .catch((err: Error) => {
+        expect(err).toBeNull();
+        assert.fail("Failed to list files in the repo");
+        done(err);
+      })
+  });
+
+  it('should detect golang build type', (done: any) => {
+    const gr = new GitSource(
+      "https://github.com/redhat-developer/devconsole-git",
+      SecretType.NO_AUTH,
+      null
+    );
+
+    const gs = new GithubService(gr);
+    gs.detectBuildType()
+      .then((r)=> {
+        expect(r.length).toBeGreaterThanOrEqual(1);
+        done()
+      })
+      .catch((err: Error) => {
+        expect(err).toBeNull();
+        assert.fail("Failed to detect build type");
+        done(err);
+      })
+  });
+
 });
